@@ -40,3 +40,8 @@ $ yarn start:dev
 - MongoDB
 - Nest
 - Angular
+
+## Autor
+
+Desarrollado por [Sergio Roman]([https://github.com/juanperez](https://github.com/ElRoman7).  
+Contacto: sergio.romam@outlook.com
