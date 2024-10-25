@@ -29,6 +29,12 @@ $ npm i -g @nest/cli
 $ docker-composer up -d
 ```
 
+5. Correr el Proyecto en Modo de Desarrollo
+
+```
+$ yarn start:dev
+```
+
 ## Stack Usado
 
 - MongoDB
