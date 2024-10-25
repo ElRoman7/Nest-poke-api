@@ -43,5 +43,5 @@ $ yarn start:dev
 
 ## Autor
 
-Desarrollado por [Sergio Roman]([https://github.com/juanperez](https://github.com/ElRoman7).  
+Desarrollado por [Sergio Roman](https://github.com/ElRoman7).  
 Contacto: sergio.romam@outlook.com
