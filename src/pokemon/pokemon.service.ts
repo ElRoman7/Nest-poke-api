@@ -6,9 +6,10 @@ import {
 } from '@nestjs/common';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
-import { Model } from 'mongoose';
+import { isValidObjectId, Model } from 'mongoose';
 import { Pokemon } from './entities/pokemon.entity';
 import { InjectModel } from '@nestjs/mongoose';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Injectable()
 export class PokemonService {
@@ -29,16 +30,33 @@ export class PokemonService {
     }
   }
 
-  findAll() {
-    return `This action returns all pokemon`;
+  async insertMany(createPokemonDto: CreatePokemonDto[]) {
+    try {
+      const pokemons = await this.pokemonModel.insertMany(createPokemonDto);
+      return pokemons;
+    } catch (error) {
+      console.log(error);
+      this.handleExceptions(error);
+    }
+  }
+
+  findAll(paginationDto: PaginationDto) {
+    const { limit = 10, offset = 0 } = paginationDto;
+    return this.pokemonModel
+      .find()
+      .limit(limit)
+      .skip(offset)
+      .sort({ no: 1 })
+      .select('-__v');
   }
 
   async findOne(term: string) {
-    let pokemon;
+    let pokemon = null;
     // Número
     if (!isNaN(+term)) {
       pokemon = await this.pokemonModel.findOne({ no: term });
-    } else {
+    }
+    if (!pokemon && isValidObjectId(term)) {
       // Buscar por id usando propiedad de Mongo
       pokemon = await this.pokemonModel.findById(term);
     }
@@ -73,6 +91,16 @@ export class PokemonService {
       throw new BadRequestException(`Pokemon with ${_id} not found`);
 
     return;
+  }
+
+  async removeAll(areYouSure: boolean = false): Promise<string> {
+    if (areYouSure) {
+      await this.pokemonModel.deleteMany({}); //delete * from pokemons
+      return 'Table is clean';
+    }
+    throw new BadRequestException(
+      'If you want to use this function, you need to confirm the variable "areYouSure"',
+    );
   }
 
   private handleExceptions(error: any) {
