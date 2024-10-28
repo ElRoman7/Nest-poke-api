@@ -29,13 +29,17 @@ $ npm i -g @nest/cli
 $ docker-composer up -d
 ```
 
-5. Correr el Proyecto en Modo de Desarrollo
+5. Clonar el archivo **.env_template** y renombrar la copia a **env**
+
+6. Llenar las variables de entorno definidas en el **.env**
+
+7. Correr el Proyecto en Modo de Desarrollo
 
 ```
 $ yarn start:dev
 ```
 
-6. Reconstruir Base de datos con el seed
+8. Reconstruir Base de datos con el seed
 
 ```
 $ http://localhost:3000/api/v2/seed
